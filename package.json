@@ -1,0 +1,16 @@
+{
+  "name": "slider_js",
+  "version": "1.0.0",
+  "license": "MIT",
+  "source": "src/index.html",
+  "scripts": {
+    "clean": "rimraf dist",
+    "serve": "yarn run clean && parcel serve -p 3000 --no-source-maps",
+    "build": "yarn run clean && parcel build --no-source-maps"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "2.9.3",
+    "parcel": "^2.9.3",
+    "rimraf": "^5.0.5"
+  }
+}

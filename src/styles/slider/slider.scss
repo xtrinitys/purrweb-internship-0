@@ -1,0 +1,94 @@
+$slider-width: 400px;
+$slider-height: 300px;
+$border-radius: 10px;
+
+.slider {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: $slider-width;
+  height: $slider-height;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, .2);
+  border-radius: $border-radius;
+
+  &__container {
+    overflow: hidden;
+    width: $slider-width;
+    height: $slider-height;
+    z-index: 1;
+    border-radius: $border-radius;
+  }
+
+  &__slides {
+    display: flex;
+    position: relative;
+    left: -$slider-width;
+    width: 10000px;
+
+    &--shifting {
+      transition: left .2s ease-out;
+    }
+  }
+
+  &--loaded {
+    .slider__slide:nth-child(even) {
+      color: #FB6376;
+      background-color: #5D2A42;
+    }
+
+    .slider__slide:nth-child(odd) {
+      color: #5D2A42;
+      background-color: #FB6376;
+    }
+  }
+
+  &__slide {
+    width: $slider-width;
+    height: $slider-height;
+    display: flex;
+    cursor: pointer;
+    user-select: none;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+    background: #b8ff47;
+    z-index: 0;
+  }
+
+  &__control {
+    position: absolute;
+    top: 50%;
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    border-radius: 50px;
+    margin-top: -20px;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+  }
+
+  &__prev,
+  &__next {
+    background-size: 22px;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    transition: transform .2s;
+  }
+
+  &__prev {
+    background-image: url(https://cdn4.iconfinder.com/data/icons/basic-user-interface-elements/700/left-arrow-back-512.png);
+    left: -100px;
+  }
+
+  &__next {
+    background-image: url(https://cdn4.iconfinder.com/data/icons/basic-user-interface-elements/700/right-forward-arrow-512.png);
+    right: -100px;
+  }
+
+  &__prev:active,
+  &__next:active {
+    transform: scale(.8);
+  }
+}
