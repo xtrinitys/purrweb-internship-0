@@ -2,12 +2,6 @@ const $slider = document.querySelector('.slider');
 
 slider($slider);
 
-/**
- * @param {HTMLElement} $slider 
- * @param {HTMLElement} $slides 
- * @param {HTMLElement} $prev 
- * @param {HTMLElement} $next 
- */
 function slider($slider) {
   const
     $sliderRow = $slider.querySelector('.slider__slides'),
