@@ -12,13 +12,13 @@ function slider($slider) {
     cloneFirst = $items[0].cloneNode(true),
     cloneLast = $items[nSlides - 1].cloneNode(true),
     slideWidth = parseInt(getComputedStyle($items[0]).width, 10),
+    initialOffsetLeft = $sliderRow.offsetLeft,
     shiftStep = 10;
 
   let
     index = 0,
     allowShift = true,
-    offsetLeft = $sliderRow.offsetLeft,
-    initialOffsetLeft = $sliderRow.offsetLeft;
+    currentOffsetLeft = $sliderRow.offsetLeft;
 
   $sliderRow.appendChild(cloneFirst);
   $sliderRow.insertBefore(cloneLast, $items[0]);
@@ -29,14 +29,14 @@ function slider($slider) {
 
   function shiftTo(callback) {
     if (allowShift) {
-      let position = 0;
+      let offset = 0;
 
       const shiftSlide = () => {
         callback();
 
-        position += shiftStep;
+        offset += shiftStep;
 
-        if (position == slideWidth) {
+        if (offset == slideWidth) {
           clearInterval(timerId);
 
           if (callback == next) {
@@ -57,26 +57,26 @@ function slider($slider) {
   }
 
   function next() {
-    $sliderRow.style.left = (offsetLeft - shiftStep) + 'px';
-    offsetLeft -= shiftStep;
+    $sliderRow.style.left = (currentOffsetLeft - shiftStep) + 'px';
+    currentOffsetLeft -= shiftStep;
   }
 
   function prev() {
-    $sliderRow.style.left = (offsetLeft + shiftStep) + 'px';
-    offsetLeft += shiftStep;
+    $sliderRow.style.left = (currentOffsetLeft + shiftStep) + 'px';
+    currentOffsetLeft += shiftStep;
   }
 
   function checkIndex() {
     if (index == -1) {
       $sliderRow.style.left = -(nSlides * slideWidth) + 'px';
       index = nSlides - 1;
-      offsetLeft = initialOffsetLeft * nSlides;
+      currentOffsetLeft = initialOffsetLeft * nSlides;
     }
 
     if (index == nSlides) {
       $sliderRow.style.left = -slideWidth + 'px';
       index = 0;
-      offsetLeft = initialOffsetLeft;
+      currentOffsetLeft = initialOffsetLeft;
     }
   }
 }
