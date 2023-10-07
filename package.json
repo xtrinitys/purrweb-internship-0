@@ -2,11 +2,12 @@
   "name": "slider_js",
   "version": "1.0.0",
   "license": "MIT",
-  "source": "src/index.html",
   "scripts": {
     "clean": "rimraf dist",
-    "serve": "yarn run clean && parcel serve -p 3000 --no-source-maps",
-    "build": "yarn run clean && parcel build --no-source-maps"
+    "serve:main": "yarn run clean && parcel serve src/index.html -p 3000 --no-source-maps",
+    "serve:slider": "yarn run clean && parcel serve src/slider.html -p 3001 --no-source-maps",
+    "build:main": "yarn run clean && parcel build src/index.html --no-source-maps",
+    "build:slider": "yarn run clean && parcel build src/slider.html --no-source-maps"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "2.9.3",
