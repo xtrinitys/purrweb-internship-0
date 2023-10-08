@@ -1,6 +1,7 @@
 $slider-width: 400px;
 $slider-height: 300px;
 $border-radius: 10px;
+$slides-gap: 20px;
 
 $light-red: #FB6376;
 $dark-red: #5D2A42;
@@ -26,8 +27,9 @@ $dark-red: #5D2A42;
   &__slides {
     display: flex;
     position: relative;
-    left: -$slider-width;
+    left: -$slider-width - $slides-gap;
     width: 10000px;
+    gap: $slides-gap;
 
     &--shifting {
       transition: left .2s ease-out;

@@ -16,7 +16,8 @@ function slider($slider) {
     nSlides = $items.length,
     cloneFirst = $items[0].cloneNode(true),
     cloneLast = $items[nSlides - 1].cloneNode(true),
-    slideWidth = parseInt(getComputedStyle($items[0]).width, 10),
+    slidesGap = parseInt(getComputedStyle($sliderRow).gap, 10),
+    slideWidth = parseInt(getComputedStyle($items[0]).width, 10) + slidesGap,
     initialOffsetLeft = $sliderRow.offsetLeft,
     shiftStep = 10;
 
