@@ -2,6 +2,9 @@ $slider-width: 400px;
 $slider-height: 300px;
 $border-radius: 10px;
 
+$light-red: #FB6376;
+$dark-red: #5D2A42;
+
 .slider {
   position: absolute;
   top: 50%;
@@ -33,13 +36,13 @@ $border-radius: 10px;
 
   &--loaded {
     .slider__slide:nth-child(even) {
-      color: #FB6376;
-      background-color: #5D2A42;
+      color: $light-red;
+      background-color: $dark-red;
     }
 
     .slider__slide:nth-child(odd) {
-      color: #5D2A42;
-      background-color: #FB6376;
+      color: $dark-red;
+      background-color: $light-red;
     }
   }
 
@@ -54,6 +57,40 @@ $border-radius: 10px;
     border-radius: 10px;
     background: #b8ff47;
     z-index: 0;
+    transition: text-shadow .1s;
+
+    &:active {
+      text-shadow: 1px 1px 1px #FFDCCC;
+    }
+  }
+
+  &__nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 1.5rem 0;
+    // background: #000;
+
+    &-item,
+    &-item--active {
+      background: $dark-red;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      box-shadow: 1px 1px 10px rgba(0, 0, 0, .3);
+      cursor: pointer;
+
+      transition: scale .3s;
+
+      &:not(.slider__nav-item--active):hover {
+        background: #843b5d;
+        transform: scale(1.1);
+      }
+    }
+
+    &-item--active {
+      background: $light-red;
+    }
   }
 
   &__control {

@@ -1,13 +1,18 @@
 const $slider = document.querySelector('.slider');
 
-slider($slider);
+document.addEventListener('DOMContentLoaded', () => slider($slider));
 
 function slider($slider) {
+  // Query HTMLElements
   const
     $sliderRow = $slider.querySelector('.slider__slides'),
     $items = $sliderRow.querySelectorAll('.slider__slide'),
+    $nav = $slider.querySelector('.slider__nav'),
     $prev = $slider.querySelector('.slider__prev'),
-    $next = $slider.querySelector('.slider__next'),
+    $next = $slider.querySelector('.slider__next');
+
+  // Consts for slider
+  const
     nSlides = $items.length,
     cloneFirst = $items[0].cloneNode(true),
     cloneLast = $items[nSlides - 1].cloneNode(true),
@@ -15,10 +20,17 @@ function slider($slider) {
     initialOffsetLeft = $sliderRow.offsetLeft,
     shiftStep = 10;
 
+  // Consts for navigation
+  const
+    navItemClass = "slider__nav-item",
+    navItemClassActive = navItemClass + '--active',
+    $navigationItems = setNavigation();
+
   let
     index = 0,
     allowShift = true,
     currentOffsetLeft = $sliderRow.offsetLeft;
+
 
   $sliderRow.appendChild(cloneFirst);
   $sliderRow.insertBefore(cloneLast, $items[0]);
@@ -27,24 +39,26 @@ function slider($slider) {
   $prev.addEventListener('click', () => shiftTo(prev));
   $next.addEventListener('click', () => shiftTo(next));
 
-  function shiftTo(callback) {
+  function shiftTo(shiftFunction) {
     if (allowShift) {
       let offset = 0;
 
       const shiftSlide = () => {
-        callback();
+        shiftFunction();
 
         offset += shiftStep;
 
         if (offset == slideWidth) {
           clearInterval(timerId);
 
-          if (callback == next) {
+          if (shiftFunction == next) {
             index++;
-          } else if (callback == prev) {
+          } else if (shiftFunction == prev) {
             index--;
           }
+
           checkIndex();
+          updateNav();
 
           allowShift = true;
         }
@@ -77,6 +91,53 @@ function slider($slider) {
       $sliderRow.style.left = -slideWidth + 'px';
       index = 0;
       currentOffsetLeft = initialOffsetLeft;
+    }
+  }
+
+  function setNavigation() {
+    for (const key of $items.keys()) {
+      const newItem = document.createElement("div");
+
+      if (key == 0) {
+        newItem.classList.add(navItemClassActive);
+      } else {
+        newItem.classList.add(navItemClass);
+      }
+
+      newItem.addEventListener('click', () => jumpToSlide(key));
+
+      $nav.appendChild(newItem);
+    }
+
+    return $nav.childNodes;
+  }
+
+  function updateNav() {
+    const isActive = ($item) => {
+      return $item.classList.contains(navItemClassActive);
+    }
+
+    for (let i = 0; i < $navigationItems.length; i++) {
+      const item = $navigationItems[i];
+
+      if (i == index && !isActive(item)) {
+        item.classList.add(navItemClassActive);
+      } else if (i != index && isActive($navigationItems[i])) {
+        item.classList.replace(navItemClassActive, navItemClass);
+      }
+    }
+  }
+
+  function jumpToSlide(i) {
+    if (i != index) {
+      const newOffset = -(i * slideWidth) + initialOffsetLeft
+
+      $sliderRow.style.left = newOffset + 'px';
+
+      currentOffsetLeft = newOffset;
+      index = i;
+
+      updateNav();
     }
   }
 }
